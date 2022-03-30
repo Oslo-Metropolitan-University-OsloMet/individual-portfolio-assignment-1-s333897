@@ -21,7 +21,7 @@ while True:
     if not message:
         print(f"Server disconnected")
         break
-    server.send(message + '\n')
+    server.send(bytes(message + '\n', "utf-8"))
 server.close()
 
 #Sources:

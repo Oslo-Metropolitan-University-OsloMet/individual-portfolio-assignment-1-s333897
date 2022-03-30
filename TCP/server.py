@@ -22,7 +22,7 @@ class ClientHandler(Thread):
         Thread.__init__(self)
        # self._name = None
         self._client = client
-        self._record = record
+        self._record = "record"
 
     def run(self):
         self._client.send(bytes("Welcome to the chat room!", "utf-8"))
@@ -35,8 +35,8 @@ class ClientHandler(Thread):
                 self._client.close()
                 break
             else:
-                message = self._name + ' ' + \
-                    ctime() + '\n' + message
+                message = (self._name) + ' ' + \
+                (ctime()) + '\n' + (message)
                 self._record.add(message)
                 self._client.send(bytes(self._record, "utf-8"))
 
