@@ -27,7 +27,7 @@ class ClientHandler(Thread):
     def run(self):
         self._client.send(bytes("Welcome to the chat room!", "utf-8"))
         self._name = self._client.recv(BUFFSIZE)
-        self._client.send(bytes(self._record, "utf-8"))
+        self._client.send(str(self._record, "utf-8"))
         while True:
             message = self._client.recv(BUFFSIZE)
             if not message:
