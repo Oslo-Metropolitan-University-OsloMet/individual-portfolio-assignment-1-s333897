@@ -16,9 +16,39 @@ server = socket(AF_INET, SOCK_STREAM)
 server.bind(ADDRESS)
 server.listen(5)
 
+
+
+
+class ClientHandler(Thread):
+#Code that tells wen a user has logged into the client
+    def __init__(self, client, record):
+        Thread.__init__(self)
+        self._client = client
+        self._record = record
+
+    def run(self):
+        self._client.send(bytes("Welcome to the chat room!", "utf-8"))
+        self._name = self._client.recv(BUFFSIZE)
+        reply = data.decode('utf-8')
+        while True:
+            message = self._client.recv(BUFFSIZE)
+            if not message:
+                print("Client disconnencted")
+                self._client.close()
+                break
+            else:
+                print('Sending: ', reply)
+                self._client.sendall(bytes(self._record, "utf-8"))
+
+
+
+
+
+
+
 #Start of implementation of bots
 def Andrew(a, b = None):
-    action = a + "ing"
+    action = a
     bad_things = ["fighting", "complaining", "yelling", "screaming", "singing", "hugging", "running", "jogging", "climbing"]
     good_things = ["stealing", "eating", "sleeping", "working", "graffitiing", "studying"]
 
@@ -36,7 +66,7 @@ def Andrew(a, b = None):
     return "I can't right now, sorry"
 
 def Charlie(a, b = None):
-    action = a + "ing"
+    action = a
     bad_things = ["fighting", "complaining", "yelling", "screaming", "climbing", "stealing", "graffitiing", "vandalising"]
     good_things = ["singing", "eating", "sleeping", "hugging", "working", "walking", "jogging"]
 
@@ -56,7 +86,7 @@ def Sofia(a, b = None):
     alternatives = ["hiking", "singing", "swimming", "fighting", "crying", "playing", "jogging"]
     b = random.choice(alternatives)
 
-    action = a + "ing"
+    action = a
     bad_things = ["fighting", "complaining", "yelling", "screaming", "stealing", "graffitiing",
                   "vandalising"]
     good_things = ["singing", "eating", "sleeping", "hugging", "working", "running", "jogging", "climbing", "running"]
@@ -77,7 +107,7 @@ def Sofia(a, b = None):
 
 
 def Karen(a, b = None):
-    action = a + "ing"
+    action = a
     bad_things = ["fighting", "complaining", "yelling", "screaming", "graffitiing", "stealing"]
     good_things = ["singing", "eating", "sleeping", "hugging", "working", "studying", "running"]
 
@@ -97,29 +127,8 @@ def Karen(a, b = None):
 
 
 
-class ClientHandler(Thread):
-#Code that tells wen a user has logged into the client
-    def __init__(self, client, record):
-        Thread.__init__(self)
-       # self._name = None
-        self._client = client
-        self._record = record
 
-    def run(self):
-        self._client.send(bytes("Welcome to the chat room!", "utf-8"))
-        self._name = self._client.recv(BUFFSIZE)
-        self._client.send(bytes(self._record, "utf-8"))
-        while True:
-            message = self._client.recv(BUFFSIZE)
-            if not message:
-                print("Client disconnencted")
-                self._client.close()
-                break
-            else:
-               # message = self._name + ' ' + \
-               # ctime() + "\n" + message
-               # self._record.add(message)
-                self._client.send(bytes(self._record, "utf-8"))
+
 
 
 while True:
@@ -133,20 +142,24 @@ while True:
     some_msg = client.recv(BUFFSIZE).decode('utf-8')
 
     #Code that tries to make the bots respond to what ever the user types in the client
-    action = random.choice(["work", "play", "cry", "walk", "eat", "fight", "sleep", "sing", "steal", "study", "graffiti", "snowboard", "run", "jogg", "climb", "hug", "chill", "watch a movie"])
+    action = random.choice(["working", "playing", "crying", "walking", "eating", "fighting", "sleeping", "singing",
+    "stealing", "studying", "graffitiing", "snowboarding", "running", "jogging", "climbing", "hugging", "chilling",
+    "watch a movie"])
     def check_activity(in_msg):
 
         return [x for x in action if
                 (x in in_msg)]
 
-    variable = ['{}'.format(Andrew(check_activity(some_msg))),
-              '{}'.format(Charles(check_activity(some_msg))),
-              '{}'.format(Sofia(check_activity(some_msg))),
-              '{}'.format(Karen(check_activity(some_msg))),]
+    variable = ["Andrew: {} \n".format(Andrew(check_activity(some_msg))),
+              "Charlie: {} \n".format(Charlie(check_activity(some_msg))),
+              "Sofia: {} \n".format(Sofia(check_activity(some_msg))),
+              "Karen: {} \n".format(Karen(check_activity(some_msg)))]
 
+    output = 'utf-8'
     var_str = ''.join(map(str, output))
-    data.send(bytes(out_str, 'utf-8'))
+    server.send(bytes("variable", 'utf-8'))
 
+ClientHandler()
 
 #Sources:
 # Alzerqawee A. N. J. (2022), Lecture 10.pptx, OsloMet. https://oslomet.instructure.com/courses/23100/pages/10-dot-03-dot-2022-lecture-10?module_item_id=409890

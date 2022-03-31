@@ -1,6 +1,6 @@
 
 class ChatRecord(object):
-
+#ChatRecord taken from lectre 10 on canvas created by Aws N. J. Alzerqawee
     def __init__(self):
         self.data = [""]
 
