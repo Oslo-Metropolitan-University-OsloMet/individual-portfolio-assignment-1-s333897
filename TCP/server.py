@@ -5,7 +5,7 @@ from threading import Thread
 from time import ctime
 import random
 
-
+#Sets the TCP server as a local server
 HOST = gethostname()
 PORT = 5000
 ADDRESS = (HOST, PORT)
@@ -16,7 +16,7 @@ server = socket(AF_INET, SOCK_STREAM)
 server.bind(ADDRESS)
 server.listen(5)
 
-
+#Start of implementation of bots
 def Andrew(a, b = None):
     action = a + "ing"
     bad_things = ["fighting", "complaining", "yelling", "screaming", "singing", "hugging", "running", "jogging", "climbing"]
@@ -93,12 +93,12 @@ def Karen(a, b = None):
     elif action in good_things:
         return randoGood.format(action)
     return "I would never do anything like that with you"
-
+#End of implementation of bots
 
 
 
 class ClientHandler(Thread):
-
+#Code that tells wen a user has logged into the client
     def __init__(self, client, record):
         Thread.__init__(self)
        # self._name = None
@@ -123,7 +123,7 @@ class ClientHandler(Thread):
 
 
 while True:
-
+#Code that constantly checks for connections and accepts any
     print(f"Waiting for connection ...")
     client, address = server.accept()
     print(f"... connected from: ", address)
@@ -131,9 +131,9 @@ while True:
     handler.start()
 
     some_msg = client.recv(BUFFSIZE).decode('utf-8')
+
+    #Code that tries to make the bots respond to what ever the user types in the client
     action = random.choice(["work", "play", "cry", "walk", "eat", "fight", "sleep", "sing", "steal", "study", "graffiti", "snowboard", "run", "jogg", "climb", "hug", "chill", "watch a movie"])
-
-
     def check_activity(in_msg):
 
         return [x for x in action if
@@ -149,7 +149,7 @@ while True:
 
 
 #Sources:
-# Alzerqawee A. N. J. (2022), Lecture 10.pptx, OsloMet
+# Alzerqawee A. N. J. (2022), Lecture 10.pptx, OsloMet. https://oslomet.instructure.com/courses/23100/pages/10-dot-03-dot-2022-lecture-10?module_item_id=409890
 
 
 
