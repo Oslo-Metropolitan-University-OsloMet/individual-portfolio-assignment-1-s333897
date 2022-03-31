@@ -25,4 +25,6 @@ I have tried a lot of different fixes, but as soon as this error doesn't show up
 
 Therefor this code is not entirely complete, but the bots work by themselves, and there server and the client works together without the bots. 
 
-
+Sources: 
+  Alzerqawee A. N. J. (2022), Lecture 10.pptx, OsloMet. https://oslomet.instructure.com/courses/23100/pages/10-dot-03-dot-2022-lecture-10?module_item_id=409890
+  
