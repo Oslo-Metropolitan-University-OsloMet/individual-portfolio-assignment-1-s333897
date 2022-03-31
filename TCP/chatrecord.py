@@ -1,5 +1,5 @@
 
-class ChatRecord(bytes):
+class ChatRecord(object):
 
     def __init__(self):
         self.data = [""]
